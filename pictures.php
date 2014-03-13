@@ -10,14 +10,8 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <h1>Administracni cast pro aplikaci pokercalc</h1>
-        <p>Under development</p>
-        <a href="./colors.php">Edit colors</a><br>
-        <a href="./values.php">Edit values</a><br>
-        <a href="./cards.php">Edit cards</a><br>
-        <a href="./pictures.php">Edit pictures</a><br>
         <?php
-
+        // put your code here
         ?>
     </body>
 </html>
