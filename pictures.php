@@ -24,12 +24,13 @@ and open the template in the editor.
             <?php
             if ($_POST["insert"]) {
                 if ($_FILES["selectNewImportPicture"]["error"] > 0) {
-                    echo "Error: " . $_FILES["selectNewImportPicture"]["error"] . "<br>";
+                    //echo "Error: " . $_FILES["selectNewImportPicture"]["error"] . "<br>";
+                    echo '<div class="alert alert-danger"><strong>Oh snap!</strong> ' . $_FILES["selectNewImportPicture"]["error"] . '</div>';
                 } else {
-                    echo "Upload: " . $_FILES["selectNewImportPicture"]["name"] . "<br>";
-                    echo "Type: " . $_FILES["selectNewImportPicture"]["type"] . "<br>";
-                    echo "Size: " . ($_FILES["selectNewImportPicture"]["size"] / 1024) . " kB<br>";
-                    echo "Stored in: " . $_FILES["selectNewImportPicture"]["tmp_name"];
+                    //echo "Upload: " . $_FILES["selectNewImportPicture"]["name"] . "<br>";
+                    //echo "Type: " . $_FILES["selectNewImportPicture"]["type"] . "<br>";
+                    //echo "Size: " . ($_FILES["selectNewImportPicture"]["size"] / 1024) . " kB<br>";
+                    //echo "Stored in: " . $_FILES["selectNewImportPicture"]["tmp_name"];
 
                     $newPlace = './img/picturesdb/' . $_FILES["selectNewImportPicture"]["name"];
                     move_uploaded_file($_FILES["selectNewImportPicture"]["tmp_name"], $newPlace);
@@ -42,15 +43,12 @@ and open the template in the editor.
                 <?php
 //echo SQL_HOST.':'.SQL_USERNAME.':'.SQL_PASSWORD;
                 $result = $connection->selectPictures();
-                echo '<tr><th>id</th><th>path</th></tr>';
+                echo '<tr><th>id</th><th>path</th><th>picture</th></tr>';
                 while ($record = @mysql_fetch_array($result)) {
                     echo "<tr>";
-                    echo "<td>";
-                    echo $record['id'];
-                    echo "</td>";
-                    echo "<td>";
-                    echo $record['path'];
-                    echo "</td>";
+                    echo "<td>" . $record['id'] . "</td>";
+                    echo "<td>" . $record['path'] . "</td>";
+                    echo "<td>".'<img src="'.$record['path'].'" alt="preview" widht="64" height="64" class="img-rounded">'."</td>";
                     echo "</tr>";
                 };
                 ?>
