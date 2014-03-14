@@ -6,51 +6,68 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title></title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <!-- Bootstrap theme -->
-        <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-
-        <!-- Custom styles for this template -->
-        <link href="css/poker.css" rel="stylesheet">
+        <?php
+        include 'head.html';
+        include 'classes/DBConnect.php';
+        ?>
     </head>
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Project name</a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="./pictures.php">Pictures</a></li>
-                        <li><a href="./colors.php">Colors</a></li>
-                        <li><a href="./values.php">Values</a></li>
-                        <li><a href="./cards.php">Cards</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </div
-        <div class="container">
-            <?php
-            // put your code here
-            ?>
-        </div>
+        <?php
+        include 'navbar.html';
+        $connection = new DBConnect();
+        $connection->connect();
+        ?>
+        <!-- Show existing pictures.-->
+        <div class="container" >
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+            <!-- Info about uploaded file-->
+            <?php
+            if ($_POST["insert"]) {
+                if ($_FILES["selectNewImportPicture"]["error"] > 0) {
+                    echo "Error: " . $_FILES["selectNewImportPicture"]["error"] . "<br>";
+                } else {
+                    echo "Upload: " . $_FILES["selectNewImportPicture"]["name"] . "<br>";
+                    echo "Type: " . $_FILES["selectNewImportPicture"]["type"] . "<br>";
+                    echo "Size: " . ($_FILES["selectNewImportPicture"]["size"] / 1024) . " kB<br>";
+                    echo "Stored in: " . $_FILES["selectNewImportPicture"]["tmp_name"];
+
+                    $newPlace = './img/picturesdb/' . $_FILES["selectNewImportPicture"]["name"];
+                    move_uploaded_file($_FILES["selectNewImportPicture"]["tmp_name"], $newPlace);
+                    $connection->insertPicture($newPlace);
+                }
+            }
+            ?>
+
+            <table class="table-bordered">
+                <?php
+//echo SQL_HOST.':'.SQL_USERNAME.':'.SQL_PASSWORD;
+                $result = $connection->selectPictures();
+                echo '<tr><th>id</th><th>path</th></tr>';
+                while ($record = @mysql_fetch_array($result)) {
+                    echo "<tr>";
+                    echo "<td>";
+                    echo $record['id'];
+                    echo "</td>";
+                    echo "<td>";
+                    echo $record['path'];
+                    echo "</td>";
+                    echo "</tr>";
+                };
+                ?>
+            </table>
+            <form class="form-inline" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="selectNewImportPicture">Select picture:</label>
+                    <input type="hidden" name="insert" value="true">
+                    <input type="file" id="selectNewImportPicture" name="selectNewImportPicture">
+                    <p class="help-block">Select new picture *.jpg</p>
+                </div>
+                <button type="submit" class="btn btn-default">Insert</button>
+            </form>
+        </div>
+        <?php
+        $connection->disconnect();
+        include 'footer.html';
+        ?>
     </body>
 </html>
