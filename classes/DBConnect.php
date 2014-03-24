@@ -35,5 +35,13 @@ class DBConnect {
     public function selectPictures() {
         return mysql_query("select * from pictures");
     }
+    
+    public function insertNewAdmin($name, $password) {
+        mysql_query("insert into admins (name, password) values ('".$name."','".md5($password)."')");
+    }
+    
+    public function findAdmin($name, $password) {
+        mysql_query("select * from admins where name='".$name."' and password='".md5($password)."'");
+    }
 
 }

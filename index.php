@@ -6,19 +6,26 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <?include 'head.html';?>
+        <?php include './head.php'; ?>
     </head>
     <body>
-        <?include 'navbar.html';?>
+        <?php include 'navbar.html'; ?>
 
         <div class="container">
             <div class="pokeradmin-template">
-                <h1>Administracni cast pro aplikaci <?echo PROJECT_NAME?></h1>
+                <h1>Administracni cast pro aplikaci <?php echo PROJECT_NAME ?></h1>
                 <p>Under development</p>
             </div> <!-- /.pokeradmin-template-->
         </div> <!-- /.container-->
 
         <div class="container" >
+            <div class="form-control-static">
+                <form action="auth.php" method="post">
+                    Login: <input type="text" name="name"><br>
+                    Password: <input type="password" name="password"><br>
+                    <input type="submit">
+                </form>
+            </div>
             <?php
             // put your code here
             ?>

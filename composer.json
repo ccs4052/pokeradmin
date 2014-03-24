@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear2.php.net"
+        }
+    ],
+    "require": {
+        "twig/twig": "1.15.1"
+    }
+}

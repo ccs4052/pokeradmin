@@ -7,8 +7,7 @@ and open the template in the editor.
 <html>
     <head>
         <?php
-        include 'head.html';
-        include 'classes/DBConnect.php';
+        require 'head.php';
         ?>
     </head>
     <body>
@@ -20,7 +19,7 @@ and open the template in the editor.
         <!-- Show existing pictures.-->
         <div class="container" >
 
-            <!-- Info about uploaded file-->
+            <!-- Insert to picture table uploaded file-->
             <?php
             if ($_POST["insert"]) {
                 if ($_FILES["selectNewImportPicture"]["error"] > 0) {
@@ -32,7 +31,7 @@ and open the template in the editor.
                     //echo "Size: " . ($_FILES["selectNewImportPicture"]["size"] / 1024) . " kB<br>";
                     //echo "Stored in: " . $_FILES["selectNewImportPicture"]["tmp_name"];
 
-                    $newPlace = './img/picturesdb/' . $_FILES["selectNewImportPicture"]["name"];
+                    $newPlace = PATH_INSERTED_IMGS . $_FILES["selectNewImportPicture"]["name"];
                     move_uploaded_file($_FILES["selectNewImportPicture"]["tmp_name"], $newPlace);
                     $connection->insertPicture($newPlace);
                 }
