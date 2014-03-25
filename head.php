@@ -1,13 +1,13 @@
 <?php
 
 //include 'classes/DBConnect.php';
-//require 'vendor/autoload.php';
+require('vendor/autoload.php');
 //include_once './constants.php';
 require('common.php');
 //require('./auth.php');
 
 header('meta charset="UTF-8"');
-echo '<title><?echo PROJECT_NAME?></title>';
+echo '<title>'.PROJECT_NAME.'</title>';
 
 #<!-- Bootstrap core CSS -->
 echo '<link href="css/bootstrap.min.css" rel="stylesheet">';

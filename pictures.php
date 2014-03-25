@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <?php
         require 'head.php';
+        include 'classes/PictureService.php'
         ?>
     </head>
     <body>
@@ -19,6 +20,8 @@ and open the template in the editor.
 
             <!-- Insert to picture table uploaded file-->
             <?php
+            $pictureService = new PictureService($db);
+
             if ($_POST["insert"]) {
                 if ($_FILES["selectNewImportPicture"]["error"] > 0) {
                     //echo "Error: " . $_FILES["selectNewImportPicture"]["error"] . "<br>";
@@ -32,46 +35,16 @@ and open the template in the editor.
                     $newPlace = PATH_INSERTED_IMGS . $_FILES["selectNewImportPicture"]["name"];
                     move_uploaded_file($_FILES["selectNewImportPicture"]["tmp_name"], $newPlace);
                     //$connection->insertPicture($newPlace);
-                    $query = "INSERT INTO pictures (path) VALUES (:path)";
-                    $query_params = array(':path' => $newPlace);
 
-                    try {
-                        // Execute the query to create the user 
-                        $stmt = $db->prepare($query);
-                        $result = $stmt->execute($query_params);
-                    } catch (PDOException $ex) {
-                        // Note: On a production website, you should not output $ex->getMessage(). 
-                        // It may provide an attacker with helpful information about your code.  
-                        die("Failed to run query: " . $ex->getMessage());
-                    }
+
+                    $pictureService->insertNewPicture();
                 }
             }
             ?>
 
-            <table class="table-bordered">
-                <?php
-                $query = 'select * from pictures';
-                $query_params = array();
-                try {
-                    // Execute the query to create the user 
-                    $stmt = $db->prepare($query);
-                    $result = $stmt->execute($query_params);
-                } catch (PDOException $ex) {
-                    // Note: On a production website, you should not output $ex->getMessage(). 
-                    // It may provide an attacker with helpful information about your code.  
-                    die("Failed to run query: " . $ex->getMessage());
-                }
-
-                echo '<tr><th>id</th><th>path</th><th>picture</th></tr>';
-                while ($record = $stmt->fetch()) {
-                    echo "<tr>";
-                    echo "<td>" . $record['id'] . "</td>";
-                    echo "<td>" . $record['path'] . "</td>";
-                    echo "<td>" . '<img src="' . $record['path'] . '" alt="preview" widht="64" height="64" class="img-rounded">' . "</td>";
-                    echo "</tr>";
-                };
-                ?>
-            </table>
+            <?php
+            $pictureService->printTable();
+            ?>
             <form class="form-inline" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="selectNewImportPicture">Select picture:</label>
@@ -82,8 +55,8 @@ and open the template in the editor.
                 <button type="submit" class="btn btn-default">Insert</button>
             </form>
         </div>
-        <?php
-        include 'footer.php';
-        ?>
+<?php
+include 'footer.php';
+?>
     </body>
 </html>
