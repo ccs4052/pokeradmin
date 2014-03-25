@@ -95,7 +95,9 @@ if (!empty($_POST)) {
     }
 }
 ?> 
+
 <h1>Login</h1> 
+
 <form action="login.php" method="post"> 
     Username:<br /> 
     <input type="text" name="username" value="<?php echo $submitted_username; ?>" /> 
@@ -105,4 +107,4 @@ if (!empty($_POST)) {
     <br /><br /> 
     <input type="submit" value="Login" /> 
 </form> 
-<a href="register.php">Register</a>
+<!--<a href="register.php">Register</a>-->

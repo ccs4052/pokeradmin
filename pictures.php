@@ -13,8 +13,6 @@ and open the template in the editor.
     <body>
         <?php
         include 'navbar.html';
-        $connection = new DBConnect();
-        $connection->connect();
         ?>
         <!-- Show existing pictures.-->
         <div class="container" >
@@ -33,21 +31,42 @@ and open the template in the editor.
 
                     $newPlace = PATH_INSERTED_IMGS . $_FILES["selectNewImportPicture"]["name"];
                     move_uploaded_file($_FILES["selectNewImportPicture"]["tmp_name"], $newPlace);
-                    $connection->insertPicture($newPlace);
+                    //$connection->insertPicture($newPlace);
+                    $query = "INSERT INTO pictures (path) VALUES (:path)";
+                    $query_params = array(':path' => $newPlace);
+
+                    try {
+                        // Execute the query to create the user 
+                        $stmt = $db->prepare($query);
+                        $result = $stmt->execute($query_params);
+                    } catch (PDOException $ex) {
+                        // Note: On a production website, you should not output $ex->getMessage(). 
+                        // It may provide an attacker with helpful information about your code.  
+                        die("Failed to run query: " . $ex->getMessage());
+                    }
                 }
             }
             ?>
 
             <table class="table-bordered">
                 <?php
-//echo SQL_HOST.':'.SQL_USERNAME.':'.SQL_PASSWORD;
-                $result = $connection->selectPictures();
+                $query = 'select * from pictures';
+                try {
+                    // Execute the query to create the user 
+                    $stmt = $db->prepare($query);
+                    $result = $stmt->execute();
+                } catch (PDOException $ex) {
+                    // Note: On a production website, you should not output $ex->getMessage(). 
+                    // It may provide an attacker with helpful information about your code.  
+                    die("Failed to run query: " . $ex->getMessage());
+                }
+
                 echo '<tr><th>id</th><th>path</th><th>picture</th></tr>';
-                while ($record = @mysql_fetch_array($result)) {
+                while ($record = $stm->fetch()) {
                     echo "<tr>";
                     echo "<td>" . $record['id'] . "</td>";
                     echo "<td>" . $record['path'] . "</td>";
-                    echo "<td>".'<img src="'.$record['path'].'" alt="preview" widht="64" height="64" class="img-rounded">'."</td>";
+                    echo "<td>" . '<img src="' . $record['path'] . '" alt="preview" widht="64" height="64" class="img-rounded">' . "</td>";
                     echo "</tr>";
                 };
                 ?>
@@ -63,7 +82,6 @@ and open the template in the editor.
             </form>
         </div>
         <?php
-        $connection->disconnect();
         include 'footer.html';
         ?>
     </body>

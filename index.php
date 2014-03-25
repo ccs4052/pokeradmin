@@ -19,13 +19,6 @@ and open the template in the editor.
         </div> <!-- /.container-->
 
         <div class="container" >
-            <div class="form-control-static">
-                <form action="auth.php" method="post">
-                    Login: <input type="text" name="name"><br>
-                    Password: <input type="password" name="password"><br>
-                    <input type="submit">
-                </form>
-            </div>
             <?php
             // put your code here
             ?>
