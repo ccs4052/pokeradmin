@@ -6,16 +6,16 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <?include 'head.html';?>
+        <?include 'head.php';?>
     </head>
     <body>
-        <?include 'navbar.html';?>
+        <?include 'navbar.php';?>
         <div class="container" >
             <?php
             // put your code here
             ?>
         </div>
 
-        <?include 'footer.html';?>
+        <?include 'footer.php';?>
     </body>
 </html>

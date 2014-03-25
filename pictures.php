@@ -12,7 +12,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include 'navbar.html';
+        include 'navbar.php';
         ?>
         <!-- Show existing pictures.-->
         <div class="container" >
@@ -51,10 +51,11 @@ and open the template in the editor.
             <table class="table-bordered">
                 <?php
                 $query = 'select * from pictures';
+                $query_params = array();
                 try {
                     // Execute the query to create the user 
                     $stmt = $db->prepare($query);
-                    $result = $stmt->execute();
+                    $result = $stmt->execute($query_params);
                 } catch (PDOException $ex) {
                     // Note: On a production website, you should not output $ex->getMessage(). 
                     // It may provide an attacker with helpful information about your code.  
@@ -62,7 +63,7 @@ and open the template in the editor.
                 }
 
                 echo '<tr><th>id</th><th>path</th><th>picture</th></tr>';
-                while ($record = $stm->fetch()) {
+                while ($record = $stmt->fetch()) {
                     echo "<tr>";
                     echo "<td>" . $record['id'] . "</td>";
                     echo "<td>" . $record['path'] . "</td>";
@@ -82,7 +83,7 @@ and open the template in the editor.
             </form>
         </div>
         <?php
-        include 'footer.html';
+        include 'footer.php';
         ?>
     </body>
 </html>

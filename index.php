@@ -9,7 +9,7 @@ and open the template in the editor.
         <?php include './head.php'; ?>
     </head>
     <body>
-        <?php include 'navbar.html'; ?>
+        <?php include 'navbar.php'; ?>
 
         <div class="container">
             <div class="pokeradmin-template">
@@ -24,6 +24,6 @@ and open the template in the editor.
             ?>
         </div>
 
-        <?include 'footer.html';?>
+        <?php include 'footer.php';?>
     </body>
 </html>
