@@ -1,7 +1,6 @@
 <?php
 // First we execute our common code to connection to the database and start the session 
 require("common.php");
-
 // This variable will be used to re-display the user's username to them in the 
 // login form if they fail to enter the correct password.  It is initialized here 
 // to an empty value, which will be shown if the user has not submitted the form. 
@@ -19,7 +18,7 @@ if (!empty($_POST)) {
                 password, 
                 salt, 
                 email 
-            FROM users 
+            FROM admins 
             WHERE 
                 username = :username 
         ";
@@ -96,15 +95,32 @@ if (!empty($_POST)) {
 }
 ?> 
 
-<h1>Login</h1> 
+<html>
+    <head>
+        <?php include 'head_stylesheets.php' ?>
+    </head>
+    <body>
 
-<form action="login.php" method="post"> 
-    Username:<br /> 
-    <input type="text" name="username" value="<?php echo $submitted_username; ?>" /> 
-    <br /><br /> 
-    Password:<br /> 
-    <input type="password" name="password" value="" /> 
-    <br /><br /> 
-    <input type="submit" value="Login" /> 
-</form> 
-<!--<a href="register.php">Register</a>-->
+        <div class="container">
+            <div class="pokeradmin-template">
+                <h1 class="label-primary">Login</h1> 
+
+                <form class="form" action="login.php" method="post"> 
+                    <div class="form-inline text-left">
+                        <label>Username:</label>
+                        <input class="form-control" type="text" name="username" value="<?php echo $submitted_username; ?>" /> 
+                    </div>
+                    <div class="form-inline text-left">
+                        <label>Password:</label>
+                        <input class="form-control" type="password" name="password" value="" /> 
+                    </div>
+                    <div class="form-inline text-left">
+                        <input class="btn btn-primary" type="submit" value="Login" /> 
+                    </div>
+                </form> 
+                <div class="text-left">
+                    <a href="register.php">Register</a>
+                </div>
+            </div>
+        </div>
+    </body>

@@ -21,7 +21,7 @@ class PictureService {
         $this->db = $db;
     }
 
-    public function insertNewPicture() {
+    public function insertNewPicture($newPlace) {
         $query = "INSERT INTO pictures (path) VALUES (:path)";
         $query_params = array(':path' => $newPlace);
 
@@ -55,8 +55,8 @@ class PictureService {
     public function printTable() {
         $stmt = $this->select();
 
-        echo '<table class="table-bordered">';
-        echo '<tr><th>id</th><th>path</th><th>picture</th></tr>';
+        echo '<table class="table table-bordered table-responsive">';
+        echo '<tr><th>#</th><th>Path</th><th>Picture</th></tr>';
         while ($record = $stmt->fetch()) {
             echo "<tr>";
             echo "<td>" . $record['id'] . "</td>";

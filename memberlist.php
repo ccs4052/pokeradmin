@@ -21,7 +21,7 @@ $query = "
             id, 
             username, 
             email 
-        FROM users 
+        FROM admins 
     ";
 
 try {

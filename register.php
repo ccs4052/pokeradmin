@@ -34,7 +34,7 @@ if (!empty($_POST)) {
     $query = " 
             SELECT 
                 1 
-            FROM users 
+            FROM admins 
             WHERE 
                 username = :username 
         ";
@@ -75,7 +75,7 @@ if (!empty($_POST)) {
     $query = " 
             SELECT 
                 1 
-            FROM users 
+            FROM admins 
             WHERE 
                 email = :email 
         ";
@@ -101,7 +101,7 @@ if (!empty($_POST)) {
     // Again, we are using special tokens (technically called parameters) to 
     // protect against SQL injection attacks. 
     $query = " 
-            INSERT INTO users ( 
+            INSERT INTO admins ( 
                 username, 
                 password, 
                 salt, 
@@ -169,16 +169,28 @@ if (!empty($_POST)) {
     die("Redirecting to login.php");
 }
 ?> 
-<h1>Register</h1> 
-<form action="register.php" method="post"> 
-    Username:<br /> 
-    <input type="text" name="username" value="" /> 
-    <br /><br /> 
-    E-Mail:<br /> 
-    <input type="text" name="email" value="" /> 
-    <br /><br /> 
-    Password:<br /> 
-    <input type="password" name="password" value="" /> 
-    <br /><br /> 
-    <input type="submit" value="Register" /> 
-</form>
+
+<html>
+    <head>
+        <?php include 'head_stylesheets.php' ?>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="pokeradmin-template">
+                <h1 class="label-primary" >Register</h1> 
+                <form class="form" action="register.php" method="post"> 
+                    Username:<br /> 
+                    <input class="form-control" type="text" name="username" value="" /> 
+                    <br /><br /> 
+                    E-Mail:<br /> 
+                    <input class="form-control" type="text" name="email" value="" /> 
+                    <br /><br /> 
+                    Password:<br /> 
+                    <input class="form-control" type="password" name="password" value="" /> 
+                    <br /><br /> 
+                    <input class="btn btn-default" type="submit" value="Register" /> 
+                </form>
+            </div>
+        </div>
+    </body>

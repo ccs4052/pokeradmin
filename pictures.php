@@ -22,7 +22,8 @@ and open the template in the editor.
             <?php
             $pictureService = new PictureService($db);
 
-            if ($_POST["insert"]) {
+//            if ($_POST["insert"]) {
+            if (filter_input(INPUT_POST, 'insert')) {
                 if ($_FILES["selectNewImportPicture"]["error"] > 0) {
                     //echo "Error: " . $_FILES["selectNewImportPicture"]["error"] . "<br>";
                     echo '<div class="alert alert-danger"><strong>Oh snap!</strong> ' . $_FILES["selectNewImportPicture"]["error"] . '</div>';
@@ -37,7 +38,7 @@ and open the template in the editor.
                     //$connection->insertPicture($newPlace);
 
 
-                    $pictureService->insertNewPicture();
+                    $pictureService->insertNewPicture($newPlace);
                 }
             }
             ?>
@@ -45,18 +46,23 @@ and open the template in the editor.
             <?php
             $pictureService->printTable();
             ?>
-            <form class="form-inline" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="selectNewImportPicture">Select picture:</label>
-                    <input type="hidden" name="insert" value="true">
-                    <input type="file" id="selectNewImportPicture" name="selectNewImportPicture">
-                    <p class="help-block">Select new picture *.jpg</p>
+            <form class="form-inline" role="form" method="post" action="<?php echo filter_input(INPUT_SERVER, 'PHP_SELF') ?>" enctype="multipart/form-data">
+
+                <div class="form-group col-sm-2 ">
+                    <label class="control-label" for="selectNewImportPicture">Select picture</label>
                 </div>
-                <button type="submit" class="btn btn-default">Insert</button>
+                <div class="form-group col-sm-4 ">
+                    <input class="form-control" type="file" id="selectNewImportPicture" name="selectNewImportPicture">
+                    <input type="hidden" name="insert" value="true">
+<!--                    <p class="help-block">Select new picture *.jpg</p>-->
+                </div>
+                <div class="form-group col-sm-2 ">
+                    <button type="submit" class="btn btn-default">Insert</button>
+                </div>
             </form>
         </div>
-<?php
-include 'footer.php';
-?>
+        <?php
+        include 'footer.php';
+        ?>
     </body>
 </html>

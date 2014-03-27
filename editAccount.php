@@ -28,7 +28,7 @@ if (!empty($_POST)) {
         $query = " 
                 SELECT 
                     1 
-                FROM users 
+                FROM admins 
                 WHERE 
                     email = :email 
             ";
@@ -86,7 +86,7 @@ if (!empty($_POST)) {
     // construct the rest of it depending on whether or not the user is changing 
     // their password. 
     $query = " 
-            UPDATE users 
+            UPDATE admins 
             SET 
                 email = :email 
         ";

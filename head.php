@@ -1,21 +1,16 @@
 <?php
 
+// assert
+assert_options(ASSERT_ACTIVE);
+assert_options(ASSERT_WARNING);
+
 //include 'classes/DBConnect.php';
 require('vendor/autoload.php');
 //include_once './constants.php';
 require('common.php');
 //require('./auth.php');
 
-header('meta charset="UTF-8"');
-echo '<title>'.PROJECT_NAME.'</title>';
-
-#<!-- Bootstrap core CSS -->
-echo '<link href="css/bootstrap.min.css" rel="stylesheet">';
-#<!-- Bootstrap theme -->
-echo '<link href="css/bootstrap-theme.min.css" rel="stylesheet">';
-
-#<!-- Custom styles for this template -->
-echo '<link href="css/poker.css" rel="stylesheet">';
+include('head_stylesheets.php');
 
 // At the top of the page we check to see whether the user is logged in or not 
 if (empty($_SESSION['user'])) {
@@ -26,6 +21,3 @@ if (empty($_SESSION['user'])) {
     // people can view your members-only content without logging in. 
     die("Redirecting to login.php");
 }
-?>
-
-
